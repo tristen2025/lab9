@@ -112,6 +112,11 @@ namespace coen70_lab9
             priority_field = init_priority;
             link_field = init_link;
         }
+       /* ~node(){
+        delete data_field;
+        delete link_field;
+        
+        }*/
         
         // Member functions to set the data,priority,and link fields:
         void set_data(const value_type& new_data) { data_field = new_data; }
@@ -136,7 +141,7 @@ namespace coen70_lab9
     };
         std::size_t list_length(const node* head_ptr);
     void list_head_insert(node*& head_ptr, unsigned int pri,const node::value_type& entry);
-    void list_insert(node* previous_ptr,unsigned int pri ,const node::value_type& entry);
+    void list_insert(node*& previous_ptr,unsigned int pri ,const node::value_type& entry);
     node* list_search(node* head_ptr, const node::value_type& target);
     node* list_search_priority(node* head_ptr, unsigned int  target);
     const node* list_search
@@ -146,7 +151,7 @@ namespace coen70_lab9
     void list_head_remove(node*& head_ptr);
     void list_remove(node* previous_ptr);
     void list_clear(node*& head_ptr);
-    void list_copy(const node* source_ptr, node*& head_ptr, node*& tail_ptr);
+    void list_copy(const node* source_ptr, node*& head_ptr/*, node*& tail_ptr*/);
     void printList(node* head_ptr);
 
     

@@ -3,7 +3,7 @@
 #include"pqueue.h"
 #include<cassert>
 
-#define DEBUGMODE 1
+#define DEBUGMODE 0
 #define DEBUG(s) if(DEBUGMODE)std::cerr<<s<<std::endl;
 
 namespace coen70_lab9{
@@ -16,17 +16,19 @@ namespace coen70_lab9{
     }
     PriorityQueue::PriorityQueue(const PriorityQueue& p){
         many_nodes = p.many_nodes;
-        node* tail_ptr = new node();
-        list_copy(p.head_ptr, head_ptr, tail_ptr);
+        //node* tail_ptr = new node();
+        list_copy(p.head_ptr, head_ptr);
         
         
     
     
     }
     void PriorityQueue::operator = (const PriorityQueue& p){
+        if(p.head_ptr == head_ptr)return;
+        list_clear(head_ptr);
         many_nodes = p.many_nodes;
-        node* tail_ptr = new node();
-        list_copy(p.head_ptr, head_ptr, tail_ptr);
+       // node* tail_ptr = new node();
+        list_copy(p.head_ptr, head_ptr/*, tail_ptr*/);
 
     
     
@@ -94,7 +96,7 @@ namespace coen70_lab9{
         }
         //std::cout<<"performed aaddionr"<< <<"\n";
         DEBUG("printing")
-        printList(head_ptr);
+        //printList(head_ptr);
         
         
         
@@ -135,6 +137,7 @@ namespace coen70_lab9{
         Item ret = head_ptr->data();
         list_head_remove(head_ptr);
         return ret;
+       //return 0;
     
     
     }
@@ -154,10 +157,11 @@ namespace coen70_lab9{
     }
     void printList(node* head_ptr){
         node* cursor;
-        node* tail;
-        list_copy(head_ptr,cursor, tail);
+        //node* tail;
+        list_copy(head_ptr,cursor/*, tail*/);
         while(cursor != NULL){
-            std::cout<<cursor->data()<<" "<<cursor->priority()<<"\n";
+            //std::cout<<cursor->data()<<" "<<cursor->priority()<<"\n";
+            
             cursor = cursor->link();
         
         
@@ -214,7 +218,7 @@ namespace coen70_lab9{
         head_ptr = new node(entry, pri,head_ptr);
     }
     
-    void list_insert(node* previous_ptr, unsigned int pri,const node::value_type& entry)
+    void list_insert(node*& previous_ptr, unsigned int pri,const node::value_type& entry)
     {
         node *insert_ptr;
         
@@ -311,11 +315,11 @@ namespace coen70_lab9{
             list_head_remove(head_ptr);
     }
     
-    void list_copy(const node* source_ptr, node*& head_ptr, node*& tail_ptr)
+    void list_copy(const node* source_ptr, node*& head_ptr/*, node*& tail_ptr*/)
     // Library facilities used: cstdlib
     {
         head_ptr = NULL;
-        tail_ptr = NULL;
+        node* tail_ptr = NULL;
         
         // Handle the case of the empty list.
         if (source_ptr == NULL)
